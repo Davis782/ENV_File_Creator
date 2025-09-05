@@ -24,11 +24,17 @@ ENV/
 """
 
 def create_gitignore():
+    """
+    Creates a .gitignore file with predefined exclusions for sensitive files and common artifacts.
+    """
     with open(".gitignore", "w") as f:
         f.write(GITIGNORE_CONTENT.strip())
     print("✅ .gitignore file created with sensitive exclusions.")
 
 def initialize_git():
+    """
+    Initializes a new Git repository in the current directory.
+    """
     subprocess.run(["git", "init"])
     print("✅ Git repository initialized.")
 
@@ -58,15 +64,27 @@ def create_readme():
     print("✅ README.md created.")
 
 def link_remote_repo():
+    """
+    Links the local Git repository to a remote GitHub repository and pushes the changes.
+    """
     username = input("Enter your GitHub username: ")
     repo_name = input("Enter your new GitHub repository name: ")
     remote_url = f"https://github.com/{username}/{repo_name}.git"
+    # Check if 'origin' remote already exists and remove it if it does
+    result = subprocess.run(["git", "remote", "get-url", "origin"], capture_output=True, text=True)
+    if result.returncode == 0:
+        print("⚠️ Remote 'origin' already exists. Removing it...")
+        subprocess.run(["git", "remote", "remove", "origin"])
+
     subprocess.run(["git", "remote", "add", "origin", remote_url])
     subprocess.run(["git", "branch", "-M", "main"])
     subprocess.run(["git", "push", "-u", "origin", "main"])
     print(f"🚀 Pushed to GitHub: {remote_url}")
 
 def menu():
+    """
+    Displays the Git setup menu and handles user choices.
+    """
     while True:
         print("\n📦 Git Setup Menu")
         print("1. Create .gitignore")
