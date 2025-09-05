@@ -1,0 +1,19 @@
+# Sensitive files
+api_keys.db
+.env
+*.hash
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+ENV/
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
